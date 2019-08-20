@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+	#button {
+		width:100px;
+		height:50px;
+		background-color: blue;
+	}
+	#target {
+		position:relative;
+		width:100px;
+		height:100px;
+		border-radius: 50px;
+		background-color: red;
+		visibility: hidden;
+	}
+	#container {
+		visibility: visible;
+		height:500px;
+		width:500px;
+		border:20px solid;
+		overflow:hidden;
+		margin:auto;
+        
+	}
+
+	#difficulty {
+		width:100px;
+		height:50px;
+		background-color: green;
+	}
+	#mode {
+		width:100px;
+		height:50px;
+		border:10px solid;
+	}
+	</style>
+	<script>
+	var timee = false;
+	var timer2 = 3;
+	var  timer;
+	var size = 100;
+	var randhgt = 400;
+	var randwdth = 400
+	var diff = 1;
+	var points;
+	var game;
+	var fail;
+	var modee = 0;
+	var left;
+	var randoff;
+	var direction;
+
+	function mode(){
+		if (timee == false){
+			if (modee < 1) {
+			modee = modee + 1;
+			document.getElementById('mode').innerHTML = 'mode: sniper';
+
+		} else {
+			modee = 0;
+			document.getElementById('mode').innerHTML = 'mode: default';
+		}
+	}
+		}
+		
+	  	setInterval(function(){
+  		if (game == true) {
+  			if (modee == 0) {
+  				         timer = timer - 1;
+
+         document.getElementById('target').style.opacity = timer/200;
+	  	         if (timer < 1){
+	  	timee = false;
+        game = false;
+  		document.getElementById('target').style.visibility = 'hidden';
+  		document.getElementById('button').style.visibility = 'visible';
+  		document.getElementById('difficulty').style.visibility = 'visible';
+  		document.getElementById('mode').style.visibility = 'visible';
+  		if (diff == 1){
+  			document.getElementById('difficulty').style.backgroundColor = 'green';
+  		} else if (diff == 2) {
+  			document.getElementById('difficulty').style.backgroundColor = 'yellow';
+  		} else {
+  			document.getElementById('difficulty').style.backgroundColor = 'red';
+  		}
+  		
+         }
+  			} else {
+  				
+  				if (direction == 1) {
+  					if (diff == 1 || diff == 2){
+  						randoff = randoff - 1;
+  					} else {
+  						randoff = randoff - 2;
+  					}
+  					  				
+  				document.getElementById('target').style.left = randoff + 'px';
+  				if (randoff < (0-size)){
+  					timee = false;
+        game = false;
+  		document.getElementById('target').style.visibility = 'hidden';
+  		document.getElementById('button').style.visibility = 'visible';
+  		document.getElementById('difficulty').style.visibility = 'visible';
+  		document.getElementById('mode').style.visibility = 'visible';
+  		if (diff == 1){
+  			document.getElementById('difficulty').style.backgroundColor = 'green';
+  		} else if (diff == 2) {
+  			document.getElementById('difficulty').style.backgroundColor = 'yellow';
+  		} else {
+  			document.getElementById('difficulty').style.backgroundColor = 'red';
+  		}
+  				}
+  			} else {
+  				 	if (diff == 1 || diff == 2){
+  						randoff = randoff + 1;
+  					} else {
+  						randoff = randoff + 2;
+  					}
+  				document.getElementById('target').style.left = randoff + 'px';
+  				if (randoff > randwdth + size) {
+  		timee = false;
+        game = false;
+  		document.getElementById('target').style.visibility = 'hidden';
+  		document.getElementById('button').style.visibility = 'visible';
+  		document.getElementById('difficulty').style.visibility = 'visible';
+  		document.getElementById('mode').style.visibility = 'visible';
+  		if (diff == 1){
+  			document.getElementById('difficulty').style.backgroundColor = 'green';
+  		} else if (diff == 2) {
+  			document.getElementById('difficulty').style.backgroundColor = 'yellow';
+  		} else {
+  			document.getElementById('difficulty').style.backgroundColor = 'red';
+  		}
+  				}
+
+
+  			}
+
+  			}
+
+  		}
+   }, 5);
+  function start() {
+     if (timee == false) {
+     	document.getElementById('difficulty').style.backgroundColor = '#98989C';
+     	timee = true;
+     	  	document.getElementById('button').innerHTML = timer2;
+  	timer2 = timer2;
+     var timing = setInterval(function(){
+     	timer2 = timer2 - 1 
+  	document.getElementById('button').innerHTML = timer2;
+  	}, 1000)
+  	setTimeout(function(){  
+  	 clearInterval(timing);	
+  	 timer2 = 3;
+  	 document.getElementById('button').innerHTML = 'Start';
+  	document.getElementById('target').style.visibility = 'visible';
+  	document.getElementById('container').style.visibility = 'visible';
+  	game = true;
+  	document.getElementById('button').style.visibility = 'hidden';
+  	document.getElementById('difficulty').style.visibility = 'hidden';
+  	document.getElementById('mode').style.visibility = 'hidden';
+  	target(); }, 3000)
+     }
+
+
+  }
+  function target() {
+  	if (modee == 0){
+  		    timer = 200;
+    fail = false;
+    var target;
+    document.getElementById('target').style.width = size + 'px';
+    document.getElementById('target').style.height = size + 'px';
+    document.getElementById('target').style.borderRadius = size/2 + 'px';
+  	var top = Math.floor(Math.random() * randhgt)
+  	var left = Math.floor(Math.random() * randwdth)
+  	console.log(top + ' ' + left);
+  	document.getElementById('target').style.top = top + 'px';
+  	document.getElementById('target').style.left = left + 'px';
+
+  	setTimeout(function(){ fail = 'none' }, 5);
+  } else {
+  	fail = false;
+  	document.getElementById('target').style.opacity = '1';
+  	document.getElementById('target').style.width = size + 'px';
+    document.getElementById('target').style.height = size + 'px';
+    document.getElementById('target').style.borderRadius = size/2 + 'px';
+    direction = Math.floor(Math.random() *2)+ 1;
+
+  	var top = Math.floor(Math.random() * randhgt)
+  	if (direction == 1){
+  		  	left = randwdth + size;
+  		  	randoff = randwdth + size;
+  	
+  } else {
+  	left = 0;
+  	randoff = 0;
+  }
+       
+  	  	document.getElementById('target').style.top = top + 'px';
+  	document.getElementById('target').style.left = left + 'px';
+  	setTimeout(function(){ fail = 'none' }, 5);
+  }
+
+
+
+  }
+  function end() {
+  	if (game == true) {
+  		if (fail !== false){
+  		game = false;
+  		timee = false;
+  		if (diff == 1){
+  			document.getElementById('difficulty').style.backgroundColor = 'green';
+  		} else if (diff == 2) {
+  			document.getElementById('difficulty').style.backgroundColor = 'yellow';
+  		} else {
+  			document.getElementById('difficulty').style.backgroundColor = 'red';
+  		}
+  		document.getElementById('target').style.visibility = 'hidden';
+  		document.getElementById('button').style.visibility = 'visible';
+  		document.getElementById('difficulty').style.visibility = 'visible';
+  		document.getElementById('mode').style.visibility = 'visible';
+  		}
+
+
+  	}
+  }
+  function diffSetting() {
+  	if (timee == false) {
+  	  	if (diff < 3){
+  		diff = diff + 1;
+  	} else {
+  		diff = 1;
+  	}
+  	
+  	if (diff == 1 ){
+  		document.getElementById('difficulty').innerHTML = 'easy';
+  		document.getElementById('difficulty').style.backgroundColor = 'green';
+  		document.getElementById('container').style.width = '500px';
+  		document.getElementById('container').style.height = '500px';
+  		randhgt = 400;
+  		randwdth = 400;
+  		size = 100; 
+  	} else if (diff == 2) {
+        document.getElementById('difficulty').innerHTML = 'medium';
+  		document.getElementById('difficulty').style.backgroundColor = 'yellow';
+  		document.getElementById('container').style.width = '700px';
+  		document.getElementById('container').style.height = '700px';
+  		randhgt = 620;
+  		randwdth = 620
+  		size = 80; 
+  	} else {
+  		        document.getElementById('difficulty').innerHTML = 'INSANE';
+  		document.getElementById('difficulty').style.backgroundColor = 'red';
+  		document.getElementById('container').style.width = '1600px';
+  		document.getElementById('container').style.height = '700px';
+  		randwdth = 1560;
+  		randhgt = 660;
+  		size = 40; 
+  	}	
+  	}
+
+  }
+</script>
+</head>
+<body>
+	<div id='button' onclick="start()">Start</div>
+	<div id='difficulty' onclick="diffSetting()">Easy</div>
+	<div id='mode' onclick='mode()'>mode: default</div>
+	
+	<div id='container' onclick='end()'><div id='target' onclick='target()'></div></div>
+</body>
+
+</html>
